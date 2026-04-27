@@ -24,6 +24,8 @@ Every time GenericAgent solves a new task, it automatically crystallizes the exe
 > **🤖 Self-Bootstrap Proof** — Everything in this repository, from installing Git and running `git init` to every commit message, was completed autonomously by GenericAgent. The author never opened a terminal once.
 
 > **📝 Personal Note** — I'm using this fork primarily to experiment with Gemini integration and to study the self-evolution mechanism. The skill crystallization approach is particularly interesting to me.
+>
+> **🔧 My Setup** — Running with `gemini-2.5-pro` as the primary model. I've found it handles multi-step browser tasks well. Will document findings as I go.
 
 ## 📋 Core Features
 - **Self-Evolving**: Automatically crystallizes each task into an skill. Capabilities grow with every use, forming your personal skill tree.
@@ -33,11 +35,4 @@ Every time GenericAgent solves a new task, it automatically crystallizes the exe
 - **Token Efficient**: <30K context window — a fraction of the 200K–1M other agents consume. Layered memory ensures the right knowledge is always in scope. Less noise, fewer hallucinations, higher success rate — at a fraction of the cost.
 
 
-## 🧬 Self-Evolution Mechanism
-
-This is what fundamentally distinguishes GenericAgent from every other agent framework.
-
-```
-[New Task] --> [Autonomous Exploration] (install deps, write scripts, debug & verify) -->
-[Crystallize Execu
-```
+## 🧬 Self-
