@@ -89,44 +89,21 @@ class BaseTool(ABC):
         }
 
     def safe_run(self, **kwargs) -> ToolResult:
-        """Run the tool, catching any exceptions and returning a ToolResult."""
+        """Run the tool, catching any exceptions and returning a ToolResult.
+
+        Note: error messages are truncated to 500 chars to avoid flooding the
+        context window with huge tracebacks when something goes wrong.
+        """
         try:
             return self.run(**kwargs)
         except Exception as exc:  # noqa: BLE001
-            return ToolResult(success=False, output=None, error=str(exc))
+            error_msg = str(exc)
+            if len(error_msg) > 500:
+                error_msg = error_msg[:500] + "... (truncated)"
+            return ToolResult(success=False, output=None, error=error_msg)
 
     def __repr__(self) -> str:
         return f"<Tool name={self.name!r}>"
 
 
-def tool_schema_from_callable(func: Callable) -> dict:
-    """Derive an OpenAI function-calling schema from a plain callable.
-
-    Useful for quickly wrapping standalone functions without subclassing BaseTool.
-    """
-    hints = get_type_hints(func)
-    sig = inspect.signature(func)
-    _type_map = {str: "string", int: "integer", float: "number", bool: "boolean"}
-    properties: dict[str, dict] = {}
-    required: list[str] = []
-
-    for param_name, param in sig.parameters.items():
-        if param_name == "self":
-            continue
-        json_type = _type_map.get(hints.get(param_name, str), "string")
-        properties[param_name] = {"type": json_type}
-        if param.default is inspect.Parameter.empty:
-            required.append(param_name)
-
-    return {
-        "type": "function",
-        "function": {
-            "name": func.__name__,
-            "description": (inspect.getdoc(func) or "").strip(),
-            "parameters": {
-                "type": "object",
-                "properties": properties,
-                "required": required,
-            },
-        },
-    }
+def tool_schema_from_cal
