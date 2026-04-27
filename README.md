@@ -26,13 +26,15 @@ Every time GenericAgent solves a new task, it automatically crystallizes the exe
 > **📝 Personal Note** — I'm using this fork primarily to experiment with Gemini integration and to study the self-evolution mechanism. The skill crystallization approach is particularly interesting to me.
 >
 > **🔧 My Setup** — Running with `gemini-2.5-pro` as the primary model. I've found it handles multi-step browser tasks well. Will document findings as I go.
+>
+> **📊 Gemini Observations so far:**
+> - `gemini-2.5-pro` works well for reasoning-heavy tasks but can be slower on simple ones
+> - `gemini-2.0-flash` is a good fallback for speed-sensitive tasks — roughly 3–4x faster
+> - Skill reuse rate noticeably improves after ~20 tasks; the skill tree starts paying off
 
 ## 📋 Core Features
 - **Self-Evolving**: Automatically crystallizes each task into an skill. Capabilities grow with every use, forming your personal skill tree.
 - **Minimal Architecture**: ~3K lines of core code. Agent Loop is ~100 lines. No complex dependencies, zero deployment overhead.
 - **Strong Execution**: Injects into a real browser (preserving login sessions). 9 atomic tools take direct control of the system.
 - **High Compatibility**: Supports Claude / Gemini / Kimi / MiniMax and other major models. Cross-platform.
-- **Token Efficient**: <30K context window — a fraction of the 200K–1M other agents consume. Layered memory ensures the right knowledge is always in scope. Less noise, fewer hallucinations, higher success rate — at a fraction of the cost.
-
-
-## 🧬 Self-
+- **Token Efficient**: <30K context window — a fraction of the 200K–1M other agents consume. 
