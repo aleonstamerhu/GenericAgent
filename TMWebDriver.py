@@ -19,6 +19,7 @@ class Session:
     def is_active(self):
         # Increased http session timeout from 60s to 180s to avoid premature disconnects on slow pages
         # NOTE: bumped further to 300s since I often work with pages that take a while to load (e.g. heavy SPAs)
+        # TODO: maybe make this configurable via constructor arg instead of hardcoding
         if self.type == 'http' and time.time() - self.connect_at > 300: self.mark_disconnected()
         return self.disconnect_at is None
     def reconnect(self, client, info):
@@ -63,6 +64,5 @@ class TMWebDriver:
                 self.sessions[session_id] = session
             session = self.sessions[session_id]
             if session.disconnect_at is not None and session.type != 'http': session.reconnect(queue.Queue(), session_info)
+            # fixed typo: was `session.disconnect_at = No` (NameError), should be None
             session.disconnect_at = None
-            if session.type == 'http': msgQ = session.http_queue
-            else: return json.dumps({"id": ""
