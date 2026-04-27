@@ -18,7 +18,8 @@ class Session:
     def url(self): return self.info.get('url', '')
     def is_active(self):
         # Increased http session timeout from 60s to 180s to avoid premature disconnects on slow pages
-        if self.type == 'http' and time.time() - self.connect_at > 180: self.mark_disconnected()
+        # NOTE: bumped further to 300s since I often work with pages that take a while to load (e.g. heavy SPAs)
+        if self.type == 'http' and time.time() - self.connect_at > 300: self.mark_disconnected()
         return self.disconnect_at is None
     def reconnect(self, client, info):
         self.info = info
